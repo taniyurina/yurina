@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>ToDoアプリ</title>
+  <title>design-uncompleted</title>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css'>
 <link rel='stylesheet' href='https://unpkg.com/@mdi/font@6.x/css/materialdesignicons.min.css'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900'>
@@ -10,73 +10,40 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<!-- Vueで指定された"app"要素、この中でのみVueが有効 -->
 <div id="app">
-  <v-app>
-    <v-content>
+    <v-app>
       <v-container>
-        <v-row
-          class="text-h3 mb-3 mt-3 font-weight-black"
-          justify="center"
+        <v-card class="my-4">
+          <v-card-title class="headline">お宝にたどり着け！</v-card-title>
+          <v-card-text>
+            {{ currentScene.text }}
+          </v-card-text>
+        </v-card>
+
+        <div v-if="currentScene.options.length > 0 && !resultMessage">
+          <v-btn
+            v-for="(option, index) in currentScene.options"
+            :key="index"
+            @click="selectOption(option)"
+            class="mx-2"
+            outlined
+            color="primary"
           >
-          My ToDo App
-        </v-row>
-        <v-row
-          class="mb-3 mt-3"
-          align="center"
-          justify="center"
-          >
-          <v-col 
-            cols="6"            
-            >
-            <v-text-field
-                 class="ml-6 mr-6"
-                 v-model:value="task"                    color="black"  
-                 label="Please input your task"
-                 
-                 
-            >
-          </v-col>
-        </v-row>
-        <v-row
-          class="mb-3 mt-3 font-weight-bold"
-          align="center"
-          justify="center"
-          >
-          Add task to list：{{ task }}
-          <v-btn v-on:click="addTask"
-               fab
-               dark
-               small               
-               color="black"
-               elevation="3"
-               >
-                 <v-icon dark>
-                   mdi-import
-                 </v-icon>
-               </v-btn>
-        </v-row>
-        <v-row
-          class="mb-3 mt-3"
-          justify="center"
-          > 
-          <v-btn v-on:click="clearAll"
-                 fab>
-                <v-icon>
-                  mdi-trash-can
-                </v-icon>
+            {{ option.text }}
           </v-btn>
-        </v-row>
-        <v-row 
-          class="mb-3 mt-3"
-          justify="center"
-          v-for="todo in todoList">
-          {{ todo }}
-        </v-row>
+        </div>
+        
+        <div v-else>
+          <v-card class="my-4">
+            <v-card-text>
+              {{ resultMessage || '今回の冒険は終わり！また遊んでね' }}<br>
+              <v-btn @click="resetStory" color="secondary">はじめから</v-btn>
+            </v-card-text>
+          </v-card>
+        </div>
       </v-container>
-    </v-content>
-  </v-app>
-</div>
+    </v-app>
+  </div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js'></script><script  src="./script.js"></script>
